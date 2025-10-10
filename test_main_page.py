@@ -1,19 +1,13 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
-
+from .pages.main_page import MainPage
 
 def test_guest_can_go_to_login_page(browser):
     link = "http://selenium1py.pythonanywhere.com/"
-    browser.get(link)
-    
-    # Добавим небольшую задержку для стабильности
-    time.sleep(2)
-    
-    # Находим и кликаем на ссылку логина
-    login_link = browser.find_element(By.CSS_SELECTOR, "#login_link")
-    login_link.click()
+    page = MainPage(browser, link)   # инициализируем Page Object, передаем в конструктор экземпляр драйвера и url адрес 
+    page.open()                      # открываем страницу
+    page.go_to_login_page()          # выполняем метод страницы — переходим на страницу логина
     
     # Проверяем, что перешли на страницу логина
     WebDriverWait(browser, 10).until(
